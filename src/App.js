@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Blog from './components/Blog'
+import AddBlogForm from './components/AddBlogForm'
 import Notification from './components/Notification'
 import ErrorNoti from './components/ErrorNoti'
 
@@ -15,6 +16,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(null)
   const [error, setError] = useState(null)
+  const [blogVisible, setBlogVisible] = useState(false)
 
   useEffect(() => {
     blogService
@@ -105,58 +107,40 @@ const App = () => {
     )
   }
 
-  const addBlogForm = () => {
-    return (
-      <div>
-        <h1>create new</h1>
-        <form onSubmit={handleAddBlog}>
-          <div>
-            title:
-              <input type='text' 
-              value={title} 
-              name='Title'
-              onChange={({target}) => setTitle(target.value)}
-              />
-          </div>
-          <div>
-            author:
-              <input type='text' 
-              value={author} 
-              name='Title'
-              onChange={({target}) => setAuthor(target.value)}
-              />
-          </div>
-          <div>
-            url:
-              <input type='text' 
-              value={url} 
-              name='Title'
-              onChange={({target}) => setUrl(target.value)}
-              />
-          </div>
-          <button type='submit'>create</button>
-        </form>
-      </div>
-    )
-  }
-
   const blogForm = () => {
+    const hideWhenVisible = {display: blogVisible ? 'none' : ''}
+    const showWhenVisible = {display: blogVisible ? '' : 'none'}
+
     return (
       <div>
-        <h1>blogs</h1>
-        {user.name} logged in<button onClick={() => handleLogout()}>logout</button><br/>
-        <br/>
-        {addBlogForm()}
-        {blogs
-          .filter(x => x.user.name===user.name)
-          .map(x => {
-            return (
-              <div key={x.id}>
-                <Blog blog={x} />
-              </div>
-            )
-          })
-        }
+          <h1>blogs</h1>
+          {user.name} logged in<button onClick={() => handleLogout()}>logout</button><br/>
+          <br/>
+        <div style={showWhenVisible}>
+          <AddBlogForm 
+            handleAddBlog={handleAddBlog}
+            handleTitleChange={({target}) => setTitle(target.value)}
+            handleAuthorChange={({target}) => setAuthor(target.value)}
+            handleUrlChange={({target}) => setUrl(target.value)}
+            title={title}
+            author={author}
+            url={url}
+          />
+          <button onClick={() => setBlogVisible(false)}>cancel</button>
+        </div>
+        <div style={hideWhenVisible}>
+          <button onClick={() => setBlogVisible(true)}>new blog</button>
+          {blogs
+            .filter(x => x.user.name===user.name)
+            .map(x => {
+              return (
+                <div key={x.id}>
+                  <Blog blog={x} />
+                </div>
+              )
+            })
+          }
+        </div>
       </div>
     )
   }
