@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 const Blog = ({ blog }) => {
   const blogStyle = {
@@ -9,10 +9,21 @@ const Blog = ({ blog }) => {
     marginBottom: 5
   }
 
+  const [visible, setVisible] = useState(false)
+  const showWhenVisible = {display: visible ? '' : 'none'}
+  const toggleVisibility = () => {
+    setVisible(!visible)
+  }
+
   return (
     <div style={blogStyle}>
-      <div key={blog.id}>
+      <div key={blog.id} onClick={() => toggleVisibility()}>
         {blog.title} {blog.author}
+      </div>
+      <div style={showWhenVisible}>
+        {blog.url} <br/>
+        {blog.likes} <button>like</button> <br/>
+        added by {blog.user.name}
       </div>
     </div>
   )
