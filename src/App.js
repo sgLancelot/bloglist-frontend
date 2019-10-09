@@ -3,6 +3,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import Blog from './components/Blog'
 import AddBlogForm from './components/AddBlogForm'
+import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import ErrorNoti from './components/ErrorNoti'
 
@@ -16,7 +17,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(null)
   const [error, setError] = useState(null)
-  const [blogVisible, setBlogVisible] = useState(false)
+  const blogFormRef = React.createRef()
 
   useEffect(() => {
     blogService
@@ -70,6 +71,7 @@ const App = () => {
     try {
       await blogService.create({title, author, url})
       console.log('successfully added blog!')
+      blogFormRef.current.toggleVisibility()
       setMessage(`a new blog ${title} by ${author} added`)
       setTimeout(()=> {setMessage(null)},5000)
       setTitle('')
@@ -107,16 +109,12 @@ const App = () => {
     )
   }
 
-  const blogForm = () => {
-    const hideWhenVisible = {display: blogVisible ? 'none' : ''}
-    const showWhenVisible = {display: blogVisible ? '' : 'none'}
-
-    return (
+  const blogForm = () => (
       <div>
-          <h1>blogs</h1>
-          {user.name} logged in<button onClick={() => handleLogout()}>logout</button><br/>
-          <br/>
-        <div style={showWhenVisible}>
+        <h1>blogs</h1>
+        {user.name} logged in<button onClick={() => handleLogout()}>logout</button><br/>
+        <br/>
+        <Togglable buttonLabel='new blog' ref={blogFormRef}>
           <AddBlogForm 
             handleAddBlog={handleAddBlog}
             handleTitleChange={({target}) => setTitle(target.value)}
@@ -126,10 +124,8 @@ const App = () => {
             author={author}
             url={url}
           />
-          <button onClick={() => setBlogVisible(false)}>cancel</button>
-        </div>
-        <div style={hideWhenVisible}>
-          <button onClick={() => setBlogVisible(true)}>new blog</button>
+        </Togglable>
+        <br/>
           {blogs
             .filter(x => x.user.name===user.name)
             .map(x => {
@@ -140,10 +136,8 @@ const App = () => {
               )
             })
           }
-        </div>
       </div>
-    )
-  }
+  )
   
   return (
     <div>
