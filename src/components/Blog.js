@@ -18,7 +18,7 @@ const Blog = ({ blog }) => {
   return (
     <div style={blogStyle}>
       <div key={blog.id} onClick={() => toggleVisibility()}>
-        {blog.title} {blog.author}
+        {blog.title} by {blog.author}
       </div>
       <div style={showWhenVisible}>
         {blog.url} <br/>
