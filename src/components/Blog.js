@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, loggedIn }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -16,6 +16,7 @@ const Blog = ({ blog }) => {
   const toggleVisibility = () => {
     setVisible(!visible)
   }
+  const showRemoveWhenLoggedIn = {display: blog.user.name===loggedIn ? '' : 'none'}
 
   const handleLikes = () => {
     setLikes(likes+1)
@@ -44,7 +45,9 @@ const Blog = ({ blog }) => {
         {blog.url} <br/>
         {likes} <button onClick={handleLikes}>like</button> <br/>
         added by {blog.user.name} <br/>
-        <button onClick={handleDelete}>remove</button>
+        <div style={showRemoveWhenLoggedIn}>
+          <button onClick={handleDelete}>remove</button>
+        </div>
       </div>
     </div>
   )

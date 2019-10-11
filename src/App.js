@@ -130,7 +130,7 @@ const App = () => {
             .map(x => {
               return (
                 <div key={x.id}>
-                  <Blog blog={x} />
+                  <Blog blog={x} loggedIn={user.name}/>
                 </div>
               )
             })
