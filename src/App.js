@@ -23,7 +23,7 @@ const App = () => {
     blogService
       .getAll()
       .then(initialBlogs => {
-        setBlogs(initialBlogs)
+        setBlogs(initialBlogs.sort((a,b) => b.likes - a.likes))
       })
   }, [])
 
@@ -35,7 +35,6 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
-
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -127,7 +126,7 @@ const App = () => {
         </Togglable>
         <br/>
           {blogs
-            .filter(x => x.user.name===user.name)
+  //          .filter(x => x.user.name===user.name)
             .map(x => {
               return (
                 <div key={x.id}>
