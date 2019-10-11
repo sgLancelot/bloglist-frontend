@@ -23,7 +23,7 @@ const App = () => {
     blogService
       .getAll()
       .then(initialBlogs => {
-        setBlogs(initialBlogs.sort((a,b) => b.likes - a.likes))
+        setBlogs(initialBlogs)
       })
   }, [])
 
@@ -126,7 +126,7 @@ const App = () => {
         </Togglable>
         <br/>
           {blogs
-  //          .filter(x => x.user.name===user.name)
+            .sort((a,b) => b.likes - a.likes)
             .map(x => {
               return (
                 <div key={x.id}>
