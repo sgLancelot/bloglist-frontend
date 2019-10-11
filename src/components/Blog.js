@@ -29,6 +29,12 @@ const Blog = ({ blog }) => {
     blogService.addLike(updatedObject, blog.id)
   }
 
+  const handleDelete = () => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
+      blogService.del(blog.id)
+    }
+  }
+
   return (
     <div style={blogStyle}>
       <div key={blog.id} onClick={() => toggleVisibility()}>
@@ -37,7 +43,8 @@ const Blog = ({ blog }) => {
       <div style={showWhenVisible}>
         {blog.url} <br/>
         {likes} <button onClick={handleLikes}>like</button> <br/>
-        added by {blog.user.name}
+        added by {blog.user.name} <br/>
+        <button onClick={handleDelete}>remove</button>
       </div>
     </div>
   )
