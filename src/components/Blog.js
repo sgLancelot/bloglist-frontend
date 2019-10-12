@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import blogService from '../services/blogs'
 
 const Blog = ({ blog, loggedIn }) => {
@@ -12,11 +12,11 @@ const Blog = ({ blog, loggedIn }) => {
 
   const [visible, setVisible] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
-  const showWhenVisible = {display: visible ? '' : 'none'}
+  const showWhenVisible = { display: visible ? '' : 'none' }
   const toggleVisibility = () => {
     setVisible(!visible)
   }
-  const showRemoveWhenLoggedIn = {display: blog.user.name===loggedIn ? '' : 'none'}
+  const showRemoveWhenLoggedIn = { display: blog.user.name===loggedIn ? '' : 'none' }
 
   const handleLikes = () => {
     setLikes(likes+1)
