@@ -38,10 +38,10 @@ const Blog = ({ blog, loggedIn }) => {
 
   return (
     <div style={blogStyle}>
-      <div key={blog.id} onClick={() => toggleVisibility()}>
+      <div key={blog.id} onClick={() => toggleVisibility()} className='toExpand'>
         {blog.title} by {blog.author}
       </div>
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className='hiddenByDefault'>
         {blog.url} <br/>
         {likes} <button onClick={handleLikes}>like</button> <br/>
         added by {blog.user.name} <br/>
