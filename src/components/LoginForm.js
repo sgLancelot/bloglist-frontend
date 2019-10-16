@@ -13,13 +13,13 @@ const LoginForm = ({
       <h1>log in to application</h1>
       <form onSubmit={handleLogin}>
         <div>
-                    username
+          username
           <input type='text'
             value={username}
             onChange={handleUsernameChange}/>
         </div>
         <div>
-                    password
+          password
           <input type='password'
             value={password}
             onChange={handlePasswordChange}/>
