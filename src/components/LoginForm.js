@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const LoginForm = ({
+  username,
+  password,
   handleLogin,
   handleUsernameChange,
-  handlePasswordChange,
-  username,
-  password
+  handlePasswordChange
 }) => {
   return (
     <div>

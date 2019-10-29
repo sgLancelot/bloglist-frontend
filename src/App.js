@@ -7,6 +7,7 @@ import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import ErrorNoti from './components/ErrorNoti'
 import LoginForm from './components/LoginForm'
+//import { useField } from './hooks'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -19,6 +20,9 @@ const App = () => {
   const [message, setMessage] = useState(null)
   const [error, setError] = useState(null)
   const blogFormRef = React.createRef()
+
+  //const username = useField()
+  //const password = useField()
 
   useEffect(() => {
     blogService
@@ -51,6 +55,9 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+      console.log('REACH HERE?')
+      //username.reset()
+      //password.reset()
     } catch (exception) {
       console.log('wrong username or password')
       setError('wrong username or password')
@@ -120,8 +127,8 @@ const App = () => {
         <LoginForm
           username={username}
           password={password}
-          handleUsernameChange={({ target }) => setUsername(target.value)}
-          handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleUsernameChange={(event) => setUsername(event.target.value)}
+          handlePasswordChange={(event) => setPassword(event.target.value)}
           handleLogin={handleLogin} /> :
         blogForm()}
     </div>
